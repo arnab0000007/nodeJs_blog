@@ -2,7 +2,6 @@
  const express = require("express");
  const mongoose = require('mongoose')
  const config = require('config')
- const chalk = require('chalk')
 
 
  //import middleware
@@ -41,7 +40,7 @@
        flashMessage: {}
      })
    }
-   console.log(chalk.red.inverse(error.message))
+   console.log(error.message)
    console.log(error)
    res.render('pages/error/500', {
      flashMessage: {}
@@ -54,9 +53,9 @@
      useNewUrlParser: true
    })
    .then(() => {
-     console.log(chalk.green('database Connected'));
+     console.log('database Connected');
      app.listen(PORT, () => {
-       console.log(chalk.greenBright.inverse(`Server is Running on PORT ${PORT}`));
+       console.log(`Server is Running on PORT ${PORT}`);
      });
    }).catch(e => {
      return console.log(e)

@@ -1,6 +1,5 @@
 const authRoute = require('./authRoute')
 const dashboardRoute = require('./dashboardRoute')
-const playgroundRoute = require('../playground/play')
 const uploadRoute = require('./uploadRoutes')
 const postRoute = require('./postRoute')
 const apiRoutes = require('../api/routes/apiRoutes')
@@ -36,12 +35,8 @@ const routes = [{
         controller: searchRoute
     },
     {
-        path:'/author',
-        controller:authorRoute
-    },
-    {
-        path: '/playground',
-        controller: playgroundRoute
+        path: '/author',
+        controller: authorRoute
     },
     {
         path: '/',
