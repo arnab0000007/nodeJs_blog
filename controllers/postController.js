@@ -188,6 +188,14 @@ exports.deletePostGetController = async (req, res, next) => {
             }
         })
 
+        await Profile.findOneAndUpdate({
+            user: req.user._id
+        }, {
+            $pull: {
+                'bookmarks': post._id
+            }
+        })
+
         req.flash('success', 'post deleted Successfully')
 
         res.redirect('/posts')
