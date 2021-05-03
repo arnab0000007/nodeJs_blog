@@ -7,14 +7,28 @@ const readingTime = require('reading-time')
 const Post = require('../models/Post')
 const Profile = require('../models/Profile')
 
+exports.createPostGetController =async (req, res, next) => {
 
-exports.createPostGetController = (req, res, next) => {
-    res.render('pages/dashboard/post/createPost', {
-        title: 'create A new Post',
-        error: {},
-        flashMessage: Flash.getMessage(req),
-        value: {}
-    })
+    try {
+
+        let profile = await Profile.findOne({
+            user: req.user._id
+        })
+        if(!profile){
+            res.redirect('/dashboard/create-profile')
+        }
+        res.render('pages/dashboard/post/createPost', {
+            title: 'create A new Post',
+            error: {},
+            flashMessage: Flash.getMessage(req),
+            value: {}
+        })
+        
+    } catch (e) {
+        next(e)
+    }
+
+   
 }
 exports.createPostPostController = async (req, res, next) => {
 
@@ -138,7 +152,7 @@ exports.editPostPostController = async (req, res, next) => {
 
         let thumbnail = post.thumbnail
         if (req.file) {
-            thumbnail = req.file.filename
+        thumbnail = `/uploads/${req.file.filename}`
         }
 
         await Post.findOneAndUpdate({

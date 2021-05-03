@@ -21,9 +21,6 @@ exports.dashboardGetController = async (req, res, next) => {
                 select: 'title thumbnail'
             })
         if (profile) {
-
-
-
             return res.render('pages/dashboard/dashboard', {
                 title: 'My dashboard',
                 flashMessage: Flash.getMessage(req),
@@ -46,6 +43,9 @@ exports.bookmarksGetController = async (req, res, next) => {
                 model: 'Post',
                 select: 'title thumbnail'
             })
+        if(!profile){
+            res.redirect('/dashboard/create-profile')
+        }    
         res.render('pages/dashboard/bookmarks', {
             title: 'My Bookmarks',
             flashMessage: Flash.getMessage(req),
@@ -234,6 +234,10 @@ exports.commentsGetController = async (req, res, next) => {
         let profile = await Profile.findOne({
             user: req.user._id
         })
+
+        if(!profile){
+            res.redirect('/dashboard/create-profile')
+        }
         let comments = await Comment.find({
                 post: {
                     $in: profile.posts
